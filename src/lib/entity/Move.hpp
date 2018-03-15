@@ -18,10 +18,11 @@ public:
 
     Entity const & getEntity() const;
     Vector<double> const & getVector() const;
+    Vector<double> & getVector();
 
 private:
     Entity const & _entity;
-    Vector<double> const _vector;
+    Vector<double> _vector;
 };
 
 std::ostream & operator<<(std::ostream & ostream_p, Move const & move_p);

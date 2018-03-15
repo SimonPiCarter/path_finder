@@ -17,4 +17,19 @@ std::ostream & operator<<(std::ostream & ostream_p, Vector<T> const & vector_p)
     return ostream_p<<"("<<vector_p.x<<";"<<vector_p.y<<")";
 }
 
+template<typename T>
+Vector<T> operator*(T const factor_p, Vector<T> const &vector_p)
+{
+    Vector<T> newVect_l;
+    newVect_l.x = vector_p.x * factor_p;
+    newVect_l.y = vector_p.y * factor_p;
+    return newVect_l;
+}
+
+template<typename T>
+Vector<T> operator*(Vector<T> const &vector_p, T const factor_p)
+{
+    return factor_p * vector_p;
+}
+
 }

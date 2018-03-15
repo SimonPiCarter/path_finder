@@ -15,6 +15,10 @@ Vector<double> const & Move::getVector() const
 {
     return _vector;
 }
+Vector<double> & Move::getVector()
+{
+    return _vector;
+}
 
 std::ostream & operator<<(std::ostream & ostream_p, Move const & move_p)
 {
