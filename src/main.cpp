@@ -3,12 +3,7 @@
 #include "entity/Entity.hpp"
 #include "entity/Move.hpp"
 
-double inline __declspec (naked) __fastcall sqrt14(double n)
-{
-	__asm fld qword ptr [esp+4]
-	__asm fsqrt
-	__asm ret 8
-}
+#include "tools/Utils.hpp"
 
 int main()
 {
@@ -22,5 +17,7 @@ int main()
     std::cout<<"Hello"<<std::endl;
     std::cout<<entity_l<<std::endl;
     std::cout<<move_l<<std::endl;
+
+    std::cout<<tools::f_sqrt(144)<<std::endl;
     return 0;
 }
