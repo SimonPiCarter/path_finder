@@ -6,6 +6,8 @@ Entity::Entity() : _position(), _radius(0.0) {}
 Entity::Entity(Entity const & other_p) : _position(other_p._position), _radius(other_p._radius) {}
 Entity::Entity(Vector<double> const &vector_p, double const & radius_p) : _position(vector_p), _radius(radius_p) {}
 
+Entity::~Entity() {}
+
 Vector<double> const & Entity::getPosition() const
 {
     return this->_position;

@@ -14,6 +14,8 @@ public:
     Entity(Entity const & other_p);
     Entity(Vector<double> const &vector_p, double const & radius_p);
 
+    virtual ~Entity();
+
     Vector<double> const & getPosition() const;
     void setPosition(Vector<double> const & position_p);
 
