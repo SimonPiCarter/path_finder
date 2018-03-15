@@ -1,8 +1,4 @@
 
-cd ..\build
-
-del . /F /Q
-
-cd ..\scripts
+rd /S /Q ..\build
 
 reconfigure.bat
