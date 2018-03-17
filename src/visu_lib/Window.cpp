@@ -184,10 +184,14 @@ void Window::drawEntity(path::Entity const * entity_p)
     path::DirectionEntity const *dirEntity_l(dynamic_cast<path::DirectionEntity const *>(entity_p));
     if ( dirEntity_l )
     {
-        // Draw direction
-        pxlCoord_l.x += static_cast<int>(dirEntity_l->getDirection().x*0.8*entity_p->getRadius()*_worldScale);
-        pxlCoord_l.y += static_cast<int>(dirEntity_l->getDirection().y*0.8*entity_p->getRadius()*_worldScale);
         radius = static_cast<int>(entity_p->getRadius()*0.2*_worldScale);
+        // Draw direction
+        pxlCoord_l.x += static_cast<int>(dirEntity_l->getDirection().x*0.4*entity_p->getRadius()*_worldScale);
+        pxlCoord_l.y += static_cast<int>(dirEntity_l->getDirection().y*0.4*entity_p->getRadius()*_worldScale);
+        drawCircle(_renderer,pxlCoord_l.x,pxlCoord_l.y,radius);
+        // Draw direction
+        pxlCoord_l.x += static_cast<int>(dirEntity_l->getDirection().x*0.4*entity_p->getRadius()*_worldScale);
+        pxlCoord_l.y += static_cast<int>(dirEntity_l->getDirection().y*0.4*entity_p->getRadius()*_worldScale);
         drawCircle(_renderer,pxlCoord_l.x,pxlCoord_l.y,radius);
     }
 }
@@ -219,4 +223,11 @@ void Window::createMove(int x_p, int y_p)
 
     // Move entity
     entity_l->setPosition(entity_l->getPosition()+move_l.getVector());
+
+    // Update direction if first entity is direction
+    path::DirectionEntity * dirEnt_l(dynamic_cast<path::DirectionEntity *>(_vEntities[0]));
+    if (dirEnt_l)
+    {
+        dirEnt_l->setDirection(moveVector_l/path::tools::f_sqrt(moveVector_l.squareLength()));
+    }
 }
