@@ -63,3 +63,43 @@ TEST(MoveTest, TestNoCollision)
     EXPECT_NEAR(move1_l.getVector().x, 1.0, 1e-5);
     EXPECT_NEAR(move2_l.getVector().x, -1.0, 1e-5);
 }
+
+TEST(MoveTest, TestNoCollisionParallelMove)
+{
+    using namespace path;
+
+    Vector<double> vector_l;    vector_l.y = 0;
+    vector_l.x = 0;
+    Entity entity1_l(vector_l, 1);
+    vector_l.x = 2;
+    Entity entity2_l(vector_l, 1);
+
+    vector_l.x = 1;
+    Move move1_l(entity1_l, vector_l);
+    Move move2_l(entity2_l, vector_l);
+
+    EXPECT_FALSE(tools::checkAndUpdateMoves(move1_l, move2_l));
+
+    EXPECT_NEAR(move1_l.getVector().x, 1.0, 1e-5);
+    EXPECT_NEAR(move2_l.getVector().x, 1.0, 1e-5);
+}
+
+TEST(MoveTest, TestCollisionParallelMove)
+{
+    using namespace path;
+
+    Vector<double> vector_l;    vector_l.y = 0;
+    vector_l.x = 0;
+    Entity entity1_l(vector_l, 1);
+    vector_l.x = 2;
+    Entity entity2_l(vector_l, 1);
+
+    vector_l.x = 1;
+    Move move1_l(entity1_l, 2.0*vector_l);
+    Move move2_l(entity2_l, vector_l);
+
+    EXPECT_TRUE(tools::checkAndUpdateMoves(move1_l, move2_l));
+
+    EXPECT_NEAR(move1_l.getVector().x, 0.0, 1e-5);
+    EXPECT_NEAR(move2_l.getVector().x, 0.0, 1e-5);
+}
