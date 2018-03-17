@@ -32,4 +32,13 @@ Vector<T> operator*(Vector<T> const &vector_p, T const factor_p)
     return factor_p * vector_p;
 }
 
+template<typename T>
+Vector<T> operator+(Vector<T> const &vectorA_p, Vector<T> const &vectorB_p)
+{
+    Vector<T> newVect_l;
+    newVect_l.x = vectorA_p.x + vectorB_p.x;
+    newVect_l.y = vectorA_p.y + vectorB_p.y;
+    return newVect_l;
+}
+
 }
