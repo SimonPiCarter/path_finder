@@ -30,12 +30,29 @@ bool checkAndUpdateMoves(Move & move1_p, Move & move2_p)
     double b(2*dx*dvx + 2*dy*dvy);
     double c(dx*dx+dy*dy-R*R);
 
-    std::cout<<"a="<<a<<std::endl;
-    std::cout<<"b="<<b<<std::endl;
-    std::cout<<"c="<<c<<std::endl;
+    // a is zero we can simplify computation (a>=0)
+    if ( a <= 1e-5 )
+    {
+        // If b == 0
+        if ( b >= -1e-5 && b <= 1e-5)
+        {
+            return false;
+        } else
+        {
+            double t(-c/b);
+            if ( t> 0.0 && t< 1.0 ) {
+                move1_p.getVector() = t * move1_p.getVector();
+                move2_p.getVector() = t * move2_p.getVector();
+                return true;
+            } else
+            {
+                return false;
+            }
+        }
+    }
 
     // Check if distance is very low and if it decreases
-    if ( c <= 0.01 && b <= 0.0 )
+    if ( c <= 1e-5 && b < 0.0 )
     {
         // set no move
         move1_p.getVector() = 0.0 * move1_p.getVector();
@@ -47,7 +64,7 @@ bool checkAndUpdateMoves(Move & move1_p, Move & move2_p)
     if ( delta >= 0.0 )
     {
         double t((-b-f_sqrt(delta))/2.0/a);
-        if ( t>= 0.0 && t<= 1.0 ) {
+        if ( t>0.0 && t<1.0 ) {
             move1_p.getVector() = t * move1_p.getVector();
             move2_p.getVector() = t * move2_p.getVector();
             return true;
