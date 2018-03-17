@@ -9,6 +9,11 @@ struct Vector
 {
     T x;
     T y;
+
+    T squareLength() const
+    {
+        return x*x+y*y;
+    }
 };
 
 template<typename T>
@@ -30,6 +35,15 @@ template<typename T>
 Vector<T> operator*(Vector<T> const &vector_p, T const factor_p)
 {
     return factor_p * vector_p;
+}
+
+template<typename T>
+Vector<T> operator/(Vector<T> const &vector_p, T const factor_p)
+{
+    Vector<T> newVect_l;
+    newVect_l.x = vector_p.x / factor_p;
+    newVect_l.y = vector_p.y / factor_p;
+    return newVect_l;
 }
 
 template<typename T>
