@@ -194,6 +194,8 @@ void Window::createMove(int x_p, int y_p)
     moveVector_l.y = static_cast<double>(y_p)/_worldScale - entity_l->getPosition().y;
     path::Move move_l(*entity_l, moveVector_l);
     path::Vector<double> noMoveVector_l;
+    noMoveVector_l.x=0;
+    noMoveVector_l.y=0;
 
     // Check move against all others entity
     for ( path::Entity * otherEntity_l : _vEntities )
