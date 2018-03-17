@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include "entity/Entity.hpp"
+#include "entity/DirectionEntity.hpp"
 #include "entity/Move.hpp"
 
 #include "tools/Utils.hpp"
@@ -30,9 +31,10 @@ int main()
 
     std::cout<<tools::f_sqrt(144)<<std::endl;
 
+    Vector<double> dir_l;    dir_l.x = 1.0;    dir_l.y = 0.0;
     std::vector<path::Entity *> vEntities_l;
     vector_l.x = 2.1;    vector_l.y = 5.2;
-    vEntities_l.push_back(new Entity(vector_l, 2.0));
+    vEntities_l.push_back(new DirectionEntity(dir_l, vector_l, 2.0));
     vector_l.x = 12.1;    vector_l.y = 15.2;
     vEntities_l.push_back(new Entity(vector_l, 2.0));
     Window window_l(20.0, vEntities_l);
