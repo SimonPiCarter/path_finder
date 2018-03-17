@@ -3,6 +3,8 @@
 #include <SDL.h>
 
 #include "entity/Entity.hpp"
+#include "entity/Move.hpp"
+#include "tools/Utils.hpp"
 
 #include <iostream>
 
@@ -121,11 +123,12 @@ bool Window::handleEvents()
                 }
                 break;
             case SDL_MOUSEBUTTONDOWN:
-                fprintf(stdout, "Un appuie sur un bouton de la souris :\n");
-                fprintf(stdout, "\tfenetre : %d\n",event.button.windowID);
-                fprintf(stdout, "\tsouris : %d\n",event.button.which);
-                fprintf(stdout, "\tbouton : %d\n",event.button.button);
-                fprintf(stdout, "\tposition : %d;%d\n",event.button.x,event.button.y);
+                // Create a move
+                createMove(event.button.x,event.button.y);
+                std::cout<<"Un appuie sur un bouton de la souris :"<<std::endl;
+                std::cout<<"\tfenetre : "<<event.button.windowID<<std::endl;
+                std::cout<<"\tsouris : "<<event.button.which<<std::endl;
+                std::cout<<"\tposition : "<<event.button.x<<";"<<event.button.y<<std::endl;
                 break;
         }
     }
@@ -177,4 +180,31 @@ void Window::drawEntity(path::Entity const * entity_p)
     pxlCoord_l.y = static_cast<int>(entity_p->getPosition().y*_worldScale);
     int radius = static_cast<int>(entity_p->getRadius()*_worldScale);
     drawCircle(_renderer,pxlCoord_l.x,pxlCoord_l.y,radius);
+}
+
+void Window::createMove(int x_p, int y_p)
+{
+    if ( _vEntities.empty() )
+    {
+        return;
+    }
+    path::Entity * entity_l(_vEntities[0]);
+    path::Vector<double> moveVector_l;
+    moveVector_l.x = static_cast<double>(x_p)/_worldScale - entity_l->getPosition().x;
+    moveVector_l.y = static_cast<double>(y_p)/_worldScale - entity_l->getPosition().y;
+    path::Move move_l(*entity_l, moveVector_l);
+    path::Vector<double> noMoveVector_l;
+
+    // Check move against all others entity
+    for ( path::Entity * otherEntity_l : _vEntities )
+    {
+        if ( otherEntity_l != entity_l )
+        {
+            path::Move noOptMove_l(*otherEntity_l, noMoveVector_l);
+            path::tools::checkAndUpdateMoves(move_l, noOptMove_l);
+        }
+    }
+
+    // Move entity
+    entity_l->setPosition(entity_l->getPosition()+move_l.getVector());
 }

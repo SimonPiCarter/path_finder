@@ -30,6 +30,7 @@ class Window
 private:
     void drawEntity(path::Entity const * entity_p);
 
+    void createMove(int x_p, int y_p);
 
     SDL_Window* _window;
     SDL_Renderer *_renderer;
