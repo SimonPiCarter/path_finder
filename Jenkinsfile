@@ -13,9 +13,12 @@ for(int i=0; i< axisNode.size(); i++) {
     def subTasks = [:]
     for(int j=0; j< axisTool.size(); j++) {
         def axisToolValue = axisTool[j]
-        subTasks["${axisNodeValue}/${axisToolValue}"] = {
+        subTasks["${axisNodeValue}/${axisToolValue}/step1"] = {
             println "Node=${env.NODE_NAME}"
             println "Java=${axisToolValue}"
+        }
+        subTasks["${axisNodeValue}/${axisToolValue}/step2"] = {
+            println "OK step2"
         }
     }
     tasks["${axisNodeValue}"] = {
