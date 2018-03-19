@@ -12,7 +12,7 @@ pipeline {
         stage('Test') {
             steps {
                 echo 'testing...'
-                sh './~/test.sh'
+                sh '~/test.sh'
             }
         }
     }
