@@ -1,31 +1,37 @@
-pipeline {
-    agent any
-    environment {
-        CI = 'true'
+def axisNode = ["osx-agent-1","osx-agent-2"]
+def axisTool = ["jdk7","jdk8"]
+def tasks = [:]
+
+stage("Before") {
+    node {
+        echo "before"
     }
-    stages {
-        stage('Build') {
-            steps {
-                echo 'building...'
-            }
+}
+
+for(int i=0; i< axisNode.size(); i++) {
+    def axisNodeValue = axisNode[i]
+    def subTasks = [:]
+    for(int j=0; j< axisTool.size(); j++) {
+        def axisToolValue = axisTool[j]
+        subTasks["${axisNodeValue}/${axisToolValue}"] = {
+            def javaHome = tool axisToolValue
+            println "Node=${env.NODE_NAME}"
+            println "Java=${javaHome}"
         }
-        stage('Test') {
-            when {
-                branch 'jenkins_file'
-            }
-            steps {
-                echo 'testing...'
-                sh '~/test.sh'
-            }
+    }
+    tasks["${axisNodeValue}"] = {
+        node(axisNodeValue) {
+            parallel subTasks
         }
-        stage('Test-master') {
-            when {
-                branch 'master'
-            }
-            steps {
-                echo 'testing...'
-                sh '~/test.sh'
-            }
-        }
+    }
+}
+
+stage ("Matrix") {
+    parallel tasks
+}
+
+stage("After") {
+    node {
+        echo "after"
     }
 }
