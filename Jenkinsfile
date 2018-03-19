@@ -20,7 +20,7 @@ for(int i=0; i< axisNode.size(); i++) {
         }
     }
     tasks["${axisNodeValue}"] = {
-        node(axisNodeValue) {
+        node() {
             parallel subTasks
         }
     }
