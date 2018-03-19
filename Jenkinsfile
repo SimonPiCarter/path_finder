@@ -11,7 +11,16 @@ pipeline {
         }
         stage('Test') {
             when {
-                branch 'development'
+                branch 'jenkins_file'
+            }
+            steps {
+                echo 'testing...'
+                sh '~/test.sh'
+            }
+        }
+        stage('Test-master') {
+            when {
+                branch 'master'
             }
             steps {
                 echo 'testing...'
